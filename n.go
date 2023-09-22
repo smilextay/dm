@@ -8,7 +8,6 @@ import (
 	"bytes"
 	"context"
 	"database/sql/driver"
-	"dm/util"
 	"net"
 	"net/url"
 	"os"
@@ -19,6 +18,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/smilextay/dm/util"
 )
 
 const (

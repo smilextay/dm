@@ -5,12 +5,13 @@
 package dm
 
 import (
-	"dm/util"
 	"fmt"
 	"math"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/smilextay/dm/util"
 )
 
 const (
@@ -132,7 +133,7 @@ const (
 
 	Dm_build_740 int32 = 0xFFFE - 3
 
-	Dm_build_741 int32 = 0XFFFE - 4
+	Dm_build_741 int32 = 0xFFFE - 4
 
 	Dm_build_742 int32 = 0xFFFE
 

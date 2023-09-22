@@ -6,12 +6,13 @@ package dm
 
 import (
 	"bytes"
-	"dm/util"
 	"io"
 	"math/big"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/smilextay/dm/util"
 )
 
 var G2DB g2db

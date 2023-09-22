@@ -8,12 +8,13 @@ package dm
 import (
 	"context"
 	"database/sql/driver"
-	"dm/util"
 	"fmt"
 	"io"
 	"reflect"
 	"strconv"
 	"time"
+
+	"github.com/smilextay/dm/util"
 )
 
 type logFilter struct{}
@@ -650,7 +651,7 @@ func (logger Logger) ErrorWithErr(msg string, err error) {
 	//}
 }
 
-//TODO: 获取goroutine objId
+// TODO: 获取goroutine objId
 func (logger Logger) formatHead(head string) string {
 	// return "[" + head + " - " + StringUtil.formatTime() + "] tid:" + Thread.currentThread().getId();
 	return "[" + head + " - " + util.StringUtil.FormatTime() + "]"

@@ -6,10 +6,11 @@
 package dm
 
 import (
-	"dm/util"
 	"math/rand"
 	"strconv"
 	"time"
+
+	"github.com/smilextay/dm/util"
 )
 
 var rwMap = make(map[string]*rwCounter)

@@ -7,12 +7,13 @@ package dm
 import (
 	"bytes"
 	"crypto/tls"
-	"dm/security"
 	"fmt"
 	"net"
 	"strconv"
 	"time"
 	"unicode/utf8"
+
+	"github.com/smilextay/dm/security"
 )
 
 const (

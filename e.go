@@ -6,12 +6,12 @@ package dm
 
 import (
 	"bytes"
+	"io"
+	"math"
+
 	"golang.org/x/text/encoding"
 	"golang.org/x/text/encoding/ianaindex"
 	"golang.org/x/text/transform"
-	"io"
-	"io/ioutil"
-	"math"
 )
 
 type dm_build_1330 struct{}
@@ -331,7 +331,7 @@ func (Dm_build_1543 *dm_build_1330) Dm_build_1542(dm_build_1544 []byte, dm_build
 
 	if dm_build_1546 == nil {
 		if e := dm_build_1589(dm_build_1545); e != nil {
-			tmp, err := ioutil.ReadAll(
+			tmp, err := io.ReadAll(
 				transform.NewReader(bytes.NewReader(dm_build_1544), e.NewEncoder()),
 			)
 			if err != nil {
@@ -419,7 +419,7 @@ func (Dm_build_1580 *dm_build_1330) Dm_build_1579(dm_build_1581 []byte, dm_build
 	if dm_build_1583 == nil {
 		if e := dm_build_1589(dm_build_1582); e != nil {
 
-			tmp, err := ioutil.ReadAll(
+			tmp, err := io.ReadAll(
 				transform.NewReader(bytes.NewReader(dm_build_1581), e.NewDecoder()),
 			)
 			if err != nil {
