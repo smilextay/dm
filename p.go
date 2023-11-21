@@ -8,15 +8,16 @@ import (
 	"context"
 	"database/sql"
 	"database/sql/driver"
+
 	"sync"
 
 	"github.com/smilextay/dm/i18n"
 )
 
 // 发版标记
-var version = "8.1.3.12"
-var build_date = "2023.04.17"
-var svn = "16532"
+var version = "8.1.3.26"
+var build_date = "2023.06.30"
+var svn = "16982"
 
 var globalDmDriver = newDmDriver()
 

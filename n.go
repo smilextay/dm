@@ -161,8 +161,8 @@ const (
 
 	COLUMN_NAME_LOWER_CASE = 2
 
-	compressDef   = Dm_build_773
-	compressIDDef = Dm_build_774
+	compressDef   = Dm_build_361
+	compressIDDef = Dm_build_362
 
 	charCodeDef = ""
 
@@ -216,7 +216,7 @@ const (
 
 	sessionTimeoutDef = 0
 
-	osAuthTypeDef = Dm_build_756
+	osAuthTypeDef = Dm_build_344
 
 	continueBatchOnErrorDef = false
 
@@ -226,7 +226,7 @@ const (
 
 	maxRowsDef = 0
 
-	rowPrefetchDef = Dm_build_757
+	rowPrefetchDef = Dm_build_345
 
 	bufPrefetchDef = 0
 
@@ -510,7 +510,7 @@ func (c *DmConnector) setAttributes(props *Properties) error {
 	c.rwStandby = props.GetBool(RwStandbyKey, c.rwStandby)
 
 	if b := props.GetBool(IsCompressKey, false); b {
-		c.compress = Dm_build_772
+		c.compress = Dm_build_360
 	}
 
 	c.compress = props.GetInt(CompressKey, c.compress, 0, 2)
@@ -563,7 +563,7 @@ func (c *DmConnector) setAttributes(props *Properties) error {
 	c.autoCommit = props.GetBool(AutoCommitKey, c.autoCommit)
 	c.maxRows = props.GetInt(MaxRowsKey, c.maxRows, 0, int(INT32_MAX))
 	c.rowPrefetch = props.GetInt(RowPrefetchKey, c.rowPrefetch, 0, int(INT32_MAX))
-	c.bufPrefetch = props.GetInt(BufPrefetchKey, c.bufPrefetch, int(Dm_build_758), int(Dm_build_759))
+	c.bufPrefetch = props.GetInt(BufPrefetchKey, c.bufPrefetch, int(Dm_build_346), int(Dm_build_347))
 	c.lobMode = props.GetInt(LobModeKey, c.lobMode, 1, 2)
 	c.stmtPoolMaxSize = props.GetInt(StmtPoolSizeKey, c.stmtPoolMaxSize, 0, int(INT32_MAX))
 	c.ignoreCase = props.GetBool(IgnoreCaseKey, c.ignoreCase)
@@ -632,26 +632,26 @@ func (c *DmConnector) parseOsAuthType(props *Properties) error {
 	value := props.GetString(OsAuthTypeKey, "")
 	if value != "" && !util.StringUtil.IsDigit(value) {
 		if util.StringUtil.EqualsIgnoreCase(value, "ON") {
-			c.osAuthType = Dm_build_756
+			c.osAuthType = Dm_build_344
 		} else if util.StringUtil.EqualsIgnoreCase(value, "SYSDBA") {
-			c.osAuthType = Dm_build_752
+			c.osAuthType = Dm_build_340
 		} else if util.StringUtil.EqualsIgnoreCase(value, "SYSAUDITOR") {
-			c.osAuthType = Dm_build_754
+			c.osAuthType = Dm_build_342
 		} else if util.StringUtil.EqualsIgnoreCase(value, "SYSSSO") {
-			c.osAuthType = Dm_build_753
+			c.osAuthType = Dm_build_341
 		} else if util.StringUtil.EqualsIgnoreCase(value, "AUTO") {
-			c.osAuthType = Dm_build_755
+			c.osAuthType = Dm_build_343
 		} else if util.StringUtil.EqualsIgnoreCase(value, "OFF") {
-			c.osAuthType = Dm_build_751
+			c.osAuthType = Dm_build_339
 		}
 	} else {
 		c.osAuthType = byte(props.GetInt(OsAuthTypeKey, int(c.osAuthType), 0, 4))
 	}
-	if c.user == "" && c.osAuthType == Dm_build_751 {
+	if c.user == "" && c.osAuthType == Dm_build_339 {
 		c.user = "SYSDBA"
-	} else if c.osAuthType != Dm_build_751 && c.user != "" {
+	} else if c.osAuthType != Dm_build_339 && c.user != "" {
 		return ECGO_OSAUTH_ERROR.throw()
-	} else if c.osAuthType != Dm_build_751 {
+	} else if c.osAuthType != Dm_build_339 {
 		c.user = os.Getenv("user")
 		c.password = ""
 	}
@@ -778,7 +778,18 @@ func (c *DmConnector) mergeConfigs(dsn string) error {
 
 	c.user = c.remap(c.user, userRemapStr)
 
-	if group, ok := ServerGroupMap[strings.ToLower(host)]; ok {
+	if a := props.GetTrimString(host, ""); a != "" {
+
+		if strings.HasPrefix(a, "(") && strings.HasSuffix(a, ")") {
+			a = strings.TrimSpace(a[1 : len(a)-1])
+		}
+		c.group = parseServerName(host, a)
+		if c.group != nil {
+			c.group.props = NewProperties()
+			c.group.props.SetProperties(GlobalProperties)
+		}
+	} else if group, ok := ServerGroupMap[strings.ToLower(host)]; ok {
+
 		c.group = group
 	} else {
 		host, port, err := net.SplitHostPort(host)
@@ -865,7 +876,7 @@ func (c *DmConnector) connectSingle(ctx context.Context) (*DmConnection, error) 
 	dc.objId = -1
 	dc.init()
 
-	dc.Access, err = dm_build_426(dc)
+	dc.Access, err = dm_build_14(dc)
 	if err != nil {
 		return nil, err
 	}
@@ -876,7 +887,7 @@ func (c *DmConnector) connectSingle(ctx context.Context) (*DmConnection, error) 
 	}
 	defer dc.finish()
 
-	if err = dc.Access.dm_build_468(); err != nil {
+	if err = dc.Access.dm_build_56(); err != nil {
 
 		if !dc.closed.IsSet() {
 			close(dc.closech)
